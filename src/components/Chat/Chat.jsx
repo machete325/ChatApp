@@ -11,7 +11,7 @@ import Select from '@mui/material/Select';
 import { makeStyles } from '@material-ui/styles';
 import s from './Chat.module.css';
 
-const socket = io.connect('http://hofenterprise.com:4000');
+const socket = io.connect('https://murmuring-citadel-71705.herokuapp.com');
 
 const useStyles = makeStyles({
   field: {
@@ -77,7 +77,7 @@ const Chat = () => {
   const getFriendsData = async (email, secret_key) => {
     try {
       const responce = await axios.get(
-        `http://hofenterprise.com:4000/user/friends?email=${email}&secret_key=${secret_key}`,
+        `https://murmuring-citadel-71705.herokuapp.com/user/friends?email=${email}&secret_key=${secret_key}`,
       );
       setFriends([...friends, ...responce.data.friends]);
     } catch (e) {

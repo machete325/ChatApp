@@ -33,10 +33,13 @@ const Home = () => {
   const handleClick = async () => {
     const user = await loginHandle(state);
     localStorage.setItem('user', JSON.stringify(user));
-    console.log('ok');
     if (user) {
       setTimeout(() => history.push('/chat'), 3000);
     }
+  };
+
+  const handleClickChat = () => {
+    history.push('/chat');
   };
 
   return (
@@ -62,6 +65,13 @@ const Home = () => {
           LOGIN
         </Button>
       </div>
+      {JSON.parse(localStorage.getItem('user')) && (
+        <div className={s.button_chat}>
+          <Button variant="contained" color="success" onClick={handleClickChat}>
+            Going to chat
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

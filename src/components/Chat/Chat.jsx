@@ -32,8 +32,10 @@ const Chat = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    socket.emit('join_room', { room_name: user.id });
-    getFriends();
+    if (user) {
+      socket.emit('join_room', { room_name: user.id });
+      getFriends();
+    }
   }, []);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const Chat = () => {
       const responce = await axios.get(
         `https://murmuring-citadel-71705.herokuapp.com/user/friends?email=${email}&secret_key=${secret_key}`,
       );
-      setFriends([...friends, ...responce.data.friends]);
+      setFriends(responce.data.friends);
     } catch (e) {
       console.log(e);
     }
@@ -109,11 +111,10 @@ const Chat = () => {
         <div className={s.title_messanger}>Messanger</div>
         <FormControl className={classes.field}>
           <InputLabel id="name">Name</InputLabel>
-
           <Select
             labelId="name"
             id="name"
-            value={state.name === '' ? '' : state.name}
+            value={state.name}
             label="name"
             name="name"
             onChange={handleChangeSelect}>
